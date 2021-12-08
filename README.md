@@ -15,7 +15,8 @@
 
 ### Основные команды `git` 
 
-`init` `log` `commit` `add` `push` `pull` `switch` `fetch` `rebase` `merge` 
+`init` `clone` `branch` `remote` `tag` `log` `commit`
+`add` `push` `pull` `switch` `fetch` `rebase` `merge` 
 
 ### Пример использования команды `git log`
 ```console
