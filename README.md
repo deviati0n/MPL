@@ -15,7 +15,7 @@
 
 ### Основные команды `git` 
 
-`init` `clone` `branch` `remote` `tag` `log` `commit`
+`init` `clone` `branch` `remote` `tag` `log` `commit` <br>
 `add` `push` `pull` `switch` `fetch` `rebase` `merge` 
 
 ### Пример использования команды `git log`
