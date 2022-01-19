@@ -13,11 +13,17 @@ driver.get(link)
 all_session = find_elements(By.XPATH, '//*[@id="INTERNET_ONLINE_"]//*/td[1]/a')
 
 
-'''
-list_of_payment_systems = list(' Банк', ' Payberry', ' RNCB', ' GenBank', '  24Alltime')
+# for loop in func_bill 
 
-for el in list_of_payment_systems:
-    driver.find_element(By.XPATH, "//td[contains( text(), el)]").click()
-'''
+from datetime import datetime, timedelta, date
+
+today = date.today()
+
+date_str = '2022-01-17'
+date_obj = datetime.strptime(date_str, '%Y-%m-%d').date()
+
+while date_obj <= today:
+    print(date_obj)
+    date_obj = date_obj + timedelta(days = 1)
 
 
