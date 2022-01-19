@@ -18,12 +18,12 @@ from datetime import datetime, timedelta, date
 
 date_bill = {'first_date':date_obj, 'last_date':today}
 
-def report_billing(date):
+def report_billing(date: Dict[str, datetime]) -> str:
     # ...
 
     while date[first_date] <= date[last_date]:
 
-        #func: func_name(date[first_date])
+        #func: func_name(str(date[first_date]))
 
        date[first_date] = date[first_date] + timedelta(days = 1)
 
@@ -49,3 +49,20 @@ bill = {'dayReq':1, 'periodReq':12, 'dayCon': 1, 'periodCon': 12, 'daySumm': 2, 
 result = BillingReport(bill)
 
 print(result.report())
+
+
+# -------------
+# property
+
+from dataclasses import dataclass
+
+@dataclass
+class BillingConfig:
+    _path: str = 'E:\Chromedriver.exe'
+    
+    @property
+    def path(self) -> str:
+        return self._path
+        
+print(BillingConfig().path)
+
