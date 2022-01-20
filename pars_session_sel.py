@@ -14,55 +14,40 @@ all_session = find_elements(By.XPATH, '//*[@id="INTERNET_ONLINE_"]//*/td[1]/a')
 
 
 # -------------
-from datetime import datetime, timedelta, date
+from pprint import pprint
 
-date_bill = {'first_date':date_obj, 'last_date':today}
+import requests
+from lxml import html
 
-def report_billing(date: Dict[str, datetime]) -> str:
-    # ...
-
-    while date[first_date] <= date[last_date]:
-
-        #func: func_name(str(date[first_date]))
-
-       date[first_date] = date[first_date] + timedelta(days = 1)
+headers = {'Content-Type': 'text/html',
+           'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15 (KHTML, like Gecko) '
+                         'Version/13.1.1 Safari/605.1.15'}
 
 
-# -------------
-# dataclass for report
-from dataclasses import dataclass
-from typing import Dict
+def connect(link):
+    response = requests.get(link, headers=headers)
+    print(response)
 
-@dataclass
-class BillingReport:
-    billing_data: Dict[str, int]
-        
-    def report(self) -> str:
-        repReq = f'Заявки - {self.billing_data["dayReq"]}/{self.billing_data["periodReq"]}'
-        repCon = f'Подключения - {self.billing_data["dayCon"]}/{self.billing_data["periodCon"]}'
-        repSumm = f'Сумма - {self.billing_data["daySumm"]}/{self.billing_data["periodSum"]}/{self.billing_data["percent"]}%'
-        
-        return f'{repReq}\n{repCon}\n{repSumm}'
-         
-         
-bill = {'dayReq':1, 'periodReq':12, 'dayCon': 1, 'periodCon': 12, 'daySumm': 2, 'periodSum': 12, 'percent': 52.3}
-result = BillingReport(bill)
-
-print(result.report())
+    return html.fromstring(response.content)
 
 
-# -------------
-# property
+def find_all_pro(tree_x):
+    pro_player = tree_x.xpath('//*[@id="tabs-1"]/div/table/tbody/tr[*]/td[1]/a/@href')
+    return pro_player
 
-from dataclasses import dataclass
 
-@dataclass
-class BillingConfig:
-    _path: str = 'E:\Chromedriver.exe'
-    
-    @property
-    def path(self) -> str:
-        return self._path
-        
-print(BillingConfig().path)
+url = "https://dota2protracker.com/"
+tree = connect(url)
+list_of_pro = find_all_pro(tree)
+# pprint(list_of_pro)
+for link_ in list_of_pro:
+    new_link = link_.replace(' ', '%20') or link_.replace('^', '%5E')
+    print(url + new_link)
+
+
+
+
+
+
+
 
