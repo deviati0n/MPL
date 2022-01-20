@@ -15,7 +15,7 @@ all_session = find_elements(By.XPATH, '//*[@id="INTERNET_ONLINE_"]//*/td[1]/a')
 
 # -------------
 from pprint import pprint
-
+import re
 import requests
 from lxml import html
 
@@ -35,14 +35,18 @@ def find_all_pro(tree_x):
     pro_player = tree_x.xpath('//*[@id="tabs-1"]/div/table/tbody/tr[*]/td[1]/a/@href')
     return pro_player
 
+def just_take_id(tree_x):
+    pro_player_id = tree.xpath('//*div[@class = "player_stats"]//a[1]/@href')
+
+    return re.sub(r'[^^\d]*', '', pro_player_id)
+
 
 url = "https://dota2protracker.com/"
-tree = connect(url)
-list_of_pro = find_all_pro(tree)
-# pprint(list_of_pro)
+list_of_pro = find_all_pro(connect(url))
+
 for link_ in list_of_pro:
-    new_link = link_.replace(' ', '%20') or link_.replace('^', '%5E')
-    print(url + new_link)
+    new_url = url + link_
+    print(just_take_id(connect(new_url)))
 
 
 
