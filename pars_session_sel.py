@@ -46,12 +46,34 @@ list_of_pro = find_all_pro(connect(url))
 
 for link_ in list_of_pro:
     new_url = url + link_
-    print(just_take_id(connect(new_url)))
+    players_id = just_take_id(connect(new_url))
 
 
+# -------------
+query = """{
+	player($steamAccountId:Long!){
+	    steamAccount{
+            proSteamAccount{
+                team{
+                    tag
+                }
+            }
+        }
+    }
+}
+"""
 
+for id in players_id:
+    variables = {'input': id}
+    r = requests.post(url, json={'query': query , 'variables': variables})
 
+# https://api.stratz.com/api/v1/player/{id}/heroPerformance?&isRadiant=true
 
+# -------------
 
-
+for id in players_id:
+    variables = {'input': id}
+    response_radiant = requests.get(url1, headers=headers)
+    response_dire = requests.get(url2, headers=headers)
+    
 
